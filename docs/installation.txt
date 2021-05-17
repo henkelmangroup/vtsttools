@@ -33,6 +33,7 @@ For vasp.6.2 also find and replace:
 .. code-block:: sh
 
       IF (LCHAIN) CALL chain_init( T_INFO, IO)
+
 with
 
 .. code-block:: sh
