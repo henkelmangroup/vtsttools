@@ -28,6 +28,17 @@ with
       CALL CHAIN_FORCE(T_INFO%NIONS,DYN%POSION,TOTEN,TIFOR, &
            TSIF,LATT_CUR%A,LATT_CUR%B,IO%IU6)
 
+For vasp.6.2 also find and replace:
+
+.. code-block:: sh
+
+      IF (LCHAIN) CALL chain_init( T_INFO, IO)
+with
+
+.. code-block:: sh
+
+      CALL chain_init( T_INFO, IO)
+
 --------------
 
 Building the VTST code into VASP
