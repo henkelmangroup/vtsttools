@@ -68,6 +68,3 @@ Nothing else needs to be done. This code will not change the working of any othe
 - ICHAIN=1: Dynamical matrix
 - ICHAIN=2: Dimer
 - ICHAIN=3: Lanczos
-
-
-
