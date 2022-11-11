@@ -52,7 +52,9 @@ The code for the NEB, dimer, Lanczos, and dynamical matrix methods, as well as t
 .. code-block:: sh
 
             bfgs.o dynmat.o  instanton.o  lbfgs.o sd.o   cg.o dimer.o bbm.o \
-            fire.o lanczos.o neb.o  qm.o opt.o
+            fire.o lanczos.o neb.o  qm.o \
+            pyamff_fortran/*.o ml_pyamff.o \
+            opt.o
 
 The objects dynmat.o, neb.o, dimer.o, lanczos.o, and instanton.o must be in the SOURCE list before chain.o appears. The optimizer objects, sd.o, cg.o, qm.o, lbfgs.o, bfgs.o, fire.o, ml_pyamff.o and all the objects in the pyamff_fortran directory must appear before the optimizer driver opt.o. Then find the variable LIB in makefile and add the following directory after the last element of the list of library:
 
