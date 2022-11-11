@@ -36,6 +36,7 @@ The following parameters are read from the INCAR file.
 +-----------------------------------------------------------------------+
 |(IOPT = 8) ML-PYAMFF = Machine learning (PyAMFF)          |
 +-----------------------------------------------------------------------+
+
 ------------
 
 Required Parameters
@@ -147,7 +148,7 @@ ML-PYAMFF Parameters (IOPT = 8)
 +===============+=========+==================================================================+
 |PYAMFF_ETOL    |0.001    |Energy RMSE tolerance of neural network training                  |
 +---------------+---------+------------------------------------------------------------------+
-|PYAMFF_ETOL    |0.01     |Force RMSE tolerance of neural network training                   |
+|PYAMFF_FTOL    |0.01     |Force RMSE tolerance of neural network training                   |
 +---------------+---------+------------------------------------------------------------------+
 |PYAMFF_FCOEFF  |1.0      |Parameter that controls contribution of force loss to the training|
 +---------------+---------+------------------------------------------------------------------+
