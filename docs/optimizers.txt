@@ -34,7 +34,7 @@ The following parameters are read from the INCAR file.
 +-----------------------------------------------------------------------+
 |(IOPT = 7) FIRE = Fast Inertial Relaxation Engine			|
 +-----------------------------------------------------------------------+
-|(IOPT = 8) ML-PYAMFF = Machine learning (PyAMFF)          |
+|(IOPT = 8) ML-PYAMFF = Machine learning (PyAMFF)                       |
 +-----------------------------------------------------------------------+
 
 ------------
