@@ -12,7 +12,7 @@ This version of quick-min is essential the same as what has been implemented in 
 
 Here is a recent `paper`_ discussing the performance of these different optimizers with the NEB.
 
-The min-mode following methods can only be used with one of these methods. If IOPT is not set in a dimer run, the job with die with a corresponding error message.
+The min-mode following methods can only be used with one of these methods. If IOPT is not set in a dimer run, the job with die with a corresponding error message..
 
 ------------------------------------------------------------------------------------------------------------------------------
 
