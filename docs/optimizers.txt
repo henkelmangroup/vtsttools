@@ -143,24 +143,26 @@ FIRE Parameters (IOPT = 7)
 ML-PYAMFF Parameters (IOPT = 8)
 ================================
 
-+---------------+---------+------------------------------------------------------------------+
-|Parameter      |Default  |Description                                                       |
-+===============+=========+==================================================================+
-|PYAMFF_ETOL    |0.001    |Energy RMSE tolerance of neural network training                  |
-+---------------+---------+------------------------------------------------------------------+
-|PYAMFF_FTOL    |0.01     |Force RMSE tolerance of neural network training                   |
-+---------------+---------+------------------------------------------------------------------+
-|PYAMFF_FCOEFF  |1.0      |Parameter that controls contribution of force loss to the training|
-+---------------+---------+------------------------------------------------------------------+
-|PYAMFF_MAXEPOCH|2000     |Maximum number of epochs of neural network training               |
-+---------------+---------+------------------------------------------------------------------+
-|PYAMFF_OPT     |RPROP    |Type of optimizer for neural network training (RPROP, ADAM, LBFGS)|
-+---------------+---------+------------------------------------------------------------------+
-|PYAMFF_SWFTOL  |0.05     |Criteria of switching optimizer type from ML-optimizer to LBFGS   |
-+---------------+---------+------------------------------------------------------------------+
-|PYAMFF_MAXMOVE |0.5      |Maximum allowed step size in total for translation by ML-optimizer|
-+---------------+---------+------------------------------------------------------------------+
-|PYAMFF_MAXITER |30       |Maximum number of relaxation steps on ML potential energy surface |
-+---------------+---------+------------------------------------------------------------------+
++---------------+-----------+------------------------------------------------------------------+
+|Parameter      |Default    |Description                                                       |
++===============+===========+==================================================================+
+|PYAMFF_MODEL   |mlff.pyamff|Input file name of neural network                                 | 
++---------------+-----------+------------------------------------------------------------------+
+|PYAMFF_ETOL    |0.001      |Energy RMSE tolerance of neural network training                  |
++---------------+-----------+------------------------------------------------------------------+
+|PYAMFF_FTOL    |0.01       |Force RMSE tolerance of neural network training                   |
++---------------+-----------+------------------------------------------------------------------+
+|PYAMFF_FCOEFF  |1.0        |Parameter that controls contribution of force loss to the training|
++---------------+-----------+------------------------------------------------------------------+
+|PYAMFF_MAXEPOCH|2000       |Maximum number of epochs of neural network training               |
++---------------+-----------+------------------------------------------------------------------+
+|PYAMFF_OPT     |RPROP      |Type of optimizer for neural network training (RPROP, ADAM, LBFGS)|
++---------------+-----------+------------------------------------------------------------------+
+|PYAMFF_SWFTOL  |0.05       |Criteria of switching optimizer type from ML-optimizer to LBFGS   |
++---------------+-----------+------------------------------------------------------------------+
+|PYAMFF_MAXMOVE |0.5        |Maximum allowed step size in total for translation by ML-optimizer|
++---------------+-----------+------------------------------------------------------------------+
+|PYAMFF_MAXITER |30         |Maximum number of relaxation steps on ML potential energy surface |
++---------------+-----------+------------------------------------------------------------------+
 
 .. _paper: http://theory.cm.utexas.edu/henkelman/pubs/sheppard08_134106.pdf
