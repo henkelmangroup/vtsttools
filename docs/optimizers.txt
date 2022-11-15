@@ -165,4 +165,5 @@ ML-PYAMFF Parameters (IOPT = 8)
 |PYAMFF_MAXITER |30         |Maximum number of relaxation steps on ML potential energy surface |
 +---------------+-----------+------------------------------------------------------------------+
 
+
 .. _paper: http://theory.cm.utexas.edu/henkelman/pubs/sheppard08_134106.pdf
