@@ -146,7 +146,7 @@ ML-PYAMFF Parameters (IOPT = 8)
 +---------------+-----------+------------------------------------------------------------------+
 |Parameter      |Default    |Description                                                       |
 +===============+===========+==================================================================+
-|PYAMFF_MODEL   |mlff.pyamff|An input file name for neural network parameters                  | 
+|PYAMFF_MODEL   |mlff.pyamff|Input file name for neural network parameters                  | 
 +---------------+-----------+------------------------------------------------------------------+
 |PYAMFF_ETOL    |0.001      |Energy RMSE tolerance of neural network training                  |
 +---------------+-----------+------------------------------------------------------------------+
