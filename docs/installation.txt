@@ -47,7 +47,7 @@ For vasp.6.2.1 you will need vtstcode 4.1 (revision 182).  A version of the vtst
 Building the VTST code into VASP
 ================================
 
-The code for the NEB, dimer, Lanczos, and dynamical matrix methods, as well as the steepest descent, force-based conjugate gradient, quick-min, lbfgs, bfgs, and fire optimizers are contained in a single package which interfaces to VASP through the chain.F file. To install, download the files in vtsttools/source into your vasp source directory. The file chain.F is replaced, so back up the old version. There are other files in the package: neb.F, dynmat.F, dimer.F, lanczos.F, sd.F, cg.F, qm.F, lbfgs.F, bfgs.F, fire.F, ml_pyamff.F, opt.F and a directory pyamff_fortran. To build the code, the VASP makefile needs to be changed. Find the variable SOURCE, which defines which objects will be built, and add the following objects before chain.o:
+The code for the NEB, dimer, Lanczos, and dynamical matrix methods, as well as the steepest descent, force-based conjugate gradient, quick-min, lbfgs, bfgs, and fire optimizers are contained in a single package which interfaces to VASP through the chain.F file. To install, download the files in vtsttools/source into your vasp source directory. The file chain.F is replaced, so back up the old version. There are other files in the package: neb.F, dynmat.F, dimer.F, lanczos.F, sd.F, cg.F, qm.F, lbfgs.F, bfgs.F, fire.F, ml_pyamff.F, opt.F and a directory pyamff_fortran. To build the code, the VASP .objects and makefile need to be changed. Find the variable SOURCE in the .objects file, which defines which objects will be built, and add the following objects before chain.o:
 
 .. code-block:: sh
 
