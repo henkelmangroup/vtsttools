@@ -39,5 +39,5 @@ For more information on subversion read its `online documentation`_.
 
 .. _online documentation: http://svnbook.red-bean.com/en/1.5/index.html
 .. _Apache License version 2: http://www.apache.org/licenses/LICENSE-2.0
-.. _vtstcode-190.tgz: http://theory.cm.utexas.edu/code/vtstcode-189.tgz
+.. _vtstcode-190.tgz: http://theory.cm.utexas.edu/code/vtstcode-190.tgz
 .. _vtstscripts.tgz: http://theory.cm.utexas.edu/code/vtstscripts.tgz
