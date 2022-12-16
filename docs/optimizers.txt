@@ -148,8 +148,7 @@ ML-PYAMFF Parameters (IOPT = 8)
 +===============+===========+==================================================================+
 |PYAMFF_MODEL   |mlff.pyamff|Input file name for neural network parameters                     | 
 +---------------+-----------+------------------------------------------------------------------+
-|PYAMFF_UQ      |RMSE       |Uncertainty quantification method of neural network training      |
-|               |           |(RMSE, GRADNORM)                                                  |
+|PYAMFF_CONV    |GRADNORM   |Convergence criteria of neural network training (GRADNORM, RMSE)  |
 +---------------+-----------+------------------------------------------------------------------+
 |PYAMFF_ETOL    |0.001      |Energy RMSE tolerance of neural network training                  |
 +---------------+-----------+------------------------------------------------------------------+
