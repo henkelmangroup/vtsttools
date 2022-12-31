@@ -49,7 +49,7 @@ The vtstcode6.3 directory contains a machine learning optimizer (IOPT=8) that ha
 Building the VTST code into VASP
 ================================
 
-The code for the NEB, dimer, Lanczos, and dynamical matrix methods, as well as the steepest descent, force-based conjugate gradient, quick-min, lbfgs, bfgs, and fire optimizers are contained in a single package which interfaces to VASP through the chain.F file. To install, download the files in vtsttools/source, choose a version, and copy the files in the directory into your vasp source directory. The file chain.F is replaced, so back up the old version. There are other files in the package: neb.F, dynmat.F, dimer.F, lanczos.F, sd.F, cg.F, qm.F, lbfgs.F, bfgs.F, fire.F, and opt.F in vtstcode5 and vtstcode6.1 directory. The vtstcode6.3 directory contains ml_pyamff.F and a directory pyamff_fortran.
+The code for the NEB, dimer, Lanczos, and dynamical matrix methods, as well as the steepest descent, force-based conjugate gradient, quick-min, lbfgs, bfgs, and fire optimizers are contained in a single package which interfaces to VASP through the chain.F file. To install, download the files in vtsttools/source, choose a version, and copy the files in the directory into your vasp source directory. The file chain.F is replaced, so back up the old version. There are other files in the package: neb.F, dynmat.F, dimer.F, lanczos.F, sd.F, cg.F, qm.F, lbfgs.F, bfgs.F, fire.F, and opt.F in vtstcode5 and vtstcode6.1 directory. The vtstcode6.3 directory contains another file ml_pyamff.F and directory pyamff_fortran, which interface to a machine learning package `PyAMFF`_.
 To build the code, the VASP .objects and makefile need to be changed. Find the variable SOURCE in the .objects file, which defines which objects will be built, and add the following objects before chain.o:
 
 vtstcode5 and vtstcode6.1
@@ -88,3 +88,5 @@ Nothing else needs to be done. This code will not change the working of any othe
 - ICHAIN=1: Dynamical matrix
 - ICHAIN=2: Dimer
 - ICHAIN=3: Lanczos
+
+.. _PyAMFF: https://gitlab.com/pyamff/pyamff 
