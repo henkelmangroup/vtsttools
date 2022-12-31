@@ -40,7 +40,8 @@ with
 
       CALL chain_init( T_INFO, IO)
 
-For vasp.6.2.1 you will need vtstcode 4.1 (revision 182).  A version of the vtstcode that will work with vasp.6.1.x - vasp.6.2.0 has been saved in the vtstcode6.1 directory. The vtstcode6.3 directory contains a machine learning optimizer (IOPT=8) that has been recently added. Follow the instruction according to the version that is used. 
+For vasp.6.2.1 you will need vtstcode 4.1 (revision 182).  A version of the vtstcode that will work with vasp.6.1.x - vasp.6.2.0 has been saved in the vtstcode6.1 directory. The vtstcode6.3 directory contains a machine learning optimizer (IOPT=8) that has been recently added. Follow the instruction according to the version that is used.
+
 --------------
 
 Building the VTST code into VASP
