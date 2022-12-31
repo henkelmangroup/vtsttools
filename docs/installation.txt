@@ -42,12 +42,23 @@ with
 
 For vasp.6.2.1 you will need vtstcode 4.1 (revision 182).  A version of the vtstcode that will work with vasp.6.1.x - vasp.6.2.0 has been saved in the vtstcode6.1 directory.
 
+The vtstcode6.3 directory contains a machine learning optimizer (IOPT=8) that has been recently added. Follow the instruction according to the version that is used. 
 --------------
 
 Building the VTST code into VASP
 ================================
 
-The code for the NEB, dimer, Lanczos, and dynamical matrix methods, as well as the steepest descent, force-based conjugate gradient, quick-min, lbfgs, bfgs, and fire optimizers are contained in a single package which interfaces to VASP through the chain.F file. To install, download the files in vtsttools/source into your vasp source directory. The file chain.F is replaced, so back up the old version. There are other files in the package: neb.F, dynmat.F, dimer.F, lanczos.F, sd.F, cg.F, qm.F, lbfgs.F, bfgs.F, fire.F, ml_pyamff.F, opt.F and a directory pyamff_fortran. To build the code, the VASP .objects and makefile need to be changed. Find the variable SOURCE in the .objects file, which defines which objects will be built, and add the following objects before chain.o:
+The code for the NEB, dimer, Lanczos, and dynamical matrix methods, as well as the steepest descent, force-based conjugate gradient, quick-min, lbfgs, bfgs, and fire optimizers are contained in a single package which interfaces to VASP through the chain.F file. To install, download the files in vtsttools/source, choose a version, and copy the files in the directory into your vasp source directory. The file chain.F is replaced, so back up the old version. There are other files in the package: neb.F, dynmat.F, dimer.F, lanczos.F, sd.F, cg.F, qm.F, lbfgs.F, bfgs.F, fire.F, and opt.F in vtstcode5 and vtstcode6.1 directory. The vtstcode6.3 directory contains ml_pyamff.F and a directory pyamff_fortran.
+To build the code, the VASP .objects and makefile need to be changed. Find the variable SOURCE in the .objects file, which defines which objects will be built, and add the following objects before chain.o:
+
+vtstcode5 and vtstcode6.1
+
+.. code-block:: sh
+
+            bfgs.o dynmat.o instanton.o lbfgs.o sd.o cg.o dimer.o bbm.o \
+            fire.o lanczos.o neb.o qm.o opt.o
+
+vtstcode6.3 
 
 .. code-block:: sh
 
@@ -56,11 +67,19 @@ The code for the NEB, dimer, Lanczos, and dynamical matrix methods, as well as t
             pyamff_fortran/*.o ml_pyamff.o \
             opt.o
 
-The objects dynmat.o, neb.o, dimer.o, lanczos.o, and instanton.o must be in the SOURCE list before chain.o appears. The optimizer objects, sd.o, cg.o, qm.o, lbfgs.o, bfgs.o, fire.o, ml_pyamff.o and all the objects in the pyamff_fortran directory must appear before the optimizer driver opt.o. Then find the variable LIB in makefile and add the following directory after the last element of the list of library:
+The objects dynmat.o, neb.o, dimer.o, lanczos.o, and instanton.o must be in the SOURCE list before chain.o appears. The optimizer objects, sd.o, cg.o, qm.o, lbfgs.o, bfgs.o, fire.o (vtstcode 5 and vtstcode 6.1), ml_pyamff.o and all the objects in the pyamff_fortran directory (vtstcode 6.3) must appear before the optimizer driver opt.o. Then find the variable LIB in makefile and add the following directory after the last element of the list of library:
+
+vtstcode5 and vtstcode6.1
+
+.. code-block:: sh
+
+            LIB= lib parser 
+
+vtstcode6.3
 
 .. code-block:: sh
         
-            LIB= lib parser ... pyamff_fortran
+            LIB= lib parser pyamff_fortran
 
 Nothing else needs to be done. This code will not change the working of any other part of vasp. This code will only be run if IMAGES is set in the INCAR file, or if ICHAIN is set, to specify which method should be run.
 
