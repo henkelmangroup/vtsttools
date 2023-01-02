@@ -53,7 +53,7 @@ The code for the NEB, dimer, Lanczos, and dynamical matrix methods, as well as t
 
 To install, download the files in vtsttools/vtstcode, choose a version, and copy the files in the directory into your vasp source directory. The file ``chain.F`` is replaced, so back up the old version. There are other files in the package: ``neb.F``, ``dynmat.F``, ``dimer.F``, ``lanczos.F``, ``sd.F``, ``cg.F``, ``qm.F``, ``lbfgs.F``, ``bfgs.F``, ``fire.F``, and ``opt.F`` in ``vtstcode5/`` and ``vtstcode6.1/`` directories. The ``vtstcode6.3/`` directory contains another file called ``ml_pyamff.F`` and directory named ``pyamff_fortran/``, which interface to a machine learning package `PyAMFF`_.
 
-To build the code, the VASP .objects and makefile need to be changed. Find the variable ``SOURCE`` in the ``.objects`` file (a hidden file in ``src/``), which defines which objects will be built, and add the following objects before ``chain.o``:
+To build the code, the VASP ``.objects`` and ``makefile`` need to be changed. Find the variable ``SOURCE`` in the ``.objects`` file (a hidden file in ``src/``), which defines which objects will be built, and add the following objects before ``chain.o``:
 
 **vtstcode5 and vtstcode6.1**
 
@@ -73,7 +73,7 @@ To build the code, the VASP .objects and makefile need to be changed. Find the v
 
 The objects ``dynmat.o``, ``neb.o``, ``dimer.o``, ``lanczos.o``, and ``instanton.o`` must be in the ``SOURCE`` list before ``chain.o`` appears. The optimizer objects, ``sd.o``, ``cg.o``, ``qm.o``, ``lbfgs.o``, ``bfgs.o``, ``fire.o`` (vtstcode 5 and vtstcode 6.1), ``ml_pyamff.o`` and all the objects in the ``pyamff_fortran/`` directory (vtstcode 6.3) must appear before the optimizer driver ``opt.o``.
 
-Then find the variable ``LIB`` in makefile and add the following directory after the last element of the list of library:
+Then find the variable ``LIB`` in ``makefile`` that is inside ``src/``, and add the following directory after the last element of the list of library:
 
 **vtstcode5 and vtstcode6.1**
 
