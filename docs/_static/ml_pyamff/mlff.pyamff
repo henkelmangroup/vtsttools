@@ -19,8 +19,8 @@ atomic-NN
 #Activation function type
 tanh  # sigmoid, relu
 #Model Structure
-2
-5 5
+2  # number of hidden layers
+5 5 # number of neurons of each layer
 #Model Parameters
 C
 #
