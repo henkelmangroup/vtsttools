@@ -172,9 +172,9 @@ The ML-`PyAMFF`_ optimizer trains a Behler-Parrinello neural network (see Physic
 +---------------+-----------+------------------------------------------------------------------+
 
 ML-PyAMFF optimizer setup
-=========================
+-------------------------
 
-Current version (vtstcode195) requires a formatted input model file (set by PYAMFF_MODEL) to use ML-PYAMFF optimizer. The formatted file needs following information:
+The current version (vtstcode195) requires a formatted input model file (set by PYAMFF_MODEL) to use ML-PYAMFF optimizer. The formatted file needs following information:
 
   1. Fingerprint types (Behler-Parrinello)
   2. Element types
@@ -185,7 +185,7 @@ Current version (vtstcode195) requires a formatted input model file (set by PYAM
 An `example`_ of the file can be found in the section below. If you are already a `PyAMFF`_ user, you can use your model output file (mlff.pyamff) as it is.  
 
 Example
-=======
+-------
 
   * Input file for neural networks: `mlff.pyamff`_
   
@@ -196,7 +196,7 @@ Example
   * Completed calculation: `VacDiff_Au111_complete.tar.gz`_.
 
 ML-PyAMFF optimizer output
-==========================
+--------------------------
 
 The OUTCAR file has details of the calculation. This information is prefixed with the ML-PyAMFF tag. There are two main information:
 
@@ -204,7 +204,7 @@ The OUTCAR file has details of the calculation. This information is prefixed wit
   2. Machine-learned potential: The predicted force by the machine-learned potential and the number of steps taken on the potential. 
 
 NOTE from developers
-====================
+--------------------
 
 ML-PyAMFF optimizer has been recently added to vtstcode6.3. It is being actively developed currently so we are welcome anyone to try and report bugs! Please use our `discussion forum`_ to ask questions or report bugs.
 
