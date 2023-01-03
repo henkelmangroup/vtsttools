@@ -174,7 +174,7 @@ The ML-`PyAMFF`_ optimizer trains a Behler-Parrinello neural network (see Physic
 ML-PyAMFF optimizer setup
 -------------------------
 
-The current version (vtstcode195) requires a formatted input model file (set by PYAMFF_MODEL) to use ML-PYAMFF optimizer. The formatted file needs following information:
+The latest version (revision 195) requires a formatted input model file (set by PYAMFF_MODEL) to use ML-PYAMFF optimizer. The formatted file needs following information:
 
   1. Fingerprint types (Behler-Parrinello)
   2. Element types
