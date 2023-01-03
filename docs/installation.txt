@@ -81,7 +81,7 @@ If you use vtstcode6.3, you need one more modification. Find the variable ``LIB`
         
             LIB= lib parser pyamff_fortran
 
-If you compile in parallel, you need to add libs to your ``dependencies`` in ``makefile``:
+If you compile in parallel, you need to add ``libs`` to your ``dependencies`` in ``makefile``:
 
 .. code-block:: sh
 
