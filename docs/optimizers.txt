@@ -190,7 +190,7 @@ Example
   * Input file for neural networks: `mlff.pyamff`_
   
   * Input files for optimizing a Cu13 cluster: `Cu13.tar.gz`_
-  * Completed calculation: `Cu13_complete.tar.gz`.
+  * Completed calculation: `Cu13_complete.tar.gz`_.
 
   * Input files for NEB calculation of a vacancy diffusion on Au(111): `VacDiff_Au111.tar.gz`_
   * Completed calculation: `VacDiff_Au111_complete.tar.gz`_.
