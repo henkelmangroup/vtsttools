@@ -182,7 +182,7 @@ Current version (vtstcode195) requires a formatted input model file (set by PYAM
   4. Behler-Parrnello fingerprint parameters 
   5. Neural network parameters 
 
-An example of the file can be found in the Example section below. If you are already a `PyAMFF`_ user, you can use your model output file (mlff.pyamff) as it is.  
+An `example`_ of the file can be found in the section below. If you are already a `PyAMFF`_ user, you can use your model output file (mlff.pyamff) as it is.  
 
 Example
 =======
@@ -211,6 +211,8 @@ ML-PyAMFF optimizer has been recently added to vtstcode6.3. It is being actively
 .. _paper: http://theory.cm.utexas.edu/henkelman/pubs/sheppard08_134106.pdf
 
 .. _PyAMFF: https://gitlab.com/pyamff/pyamff
+
+.. _example: http://theory.cm.utexas.edu/vtsttools/optimizers.html#example
 
 .. _mlff.pyamff: _static/ml_pyamff/mlff.pyamff 
 .. _Cu13.tar.gz: _static/ml_pyamff/Cu13.tar.gz
