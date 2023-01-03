@@ -1,0 +1,30 @@
+#Fingerprint type
+BP
+#Rmins
+C O
+    0.01    0.01  #C-C, C-O
+    0.01    0.01  #O-C, O-O
+#    type   number
+      G1        3
+#  center neighbor      eta       Rs     rcut        fpmin        fpmax      #(fpmin, fpmax values can be any number)
+       C        O    0.005    0.000    3.000 -1.000000000e+00  1.226304939e+00
+       O        C    0.005    0.000    3.000 5.495786732e-01  6.767262663e-01
+       O        O    0.050    0.000    3.000 -1.000000000e+00  5.073256082e-02
+#    type   number
+      G2        1
+#  center neighbor1 neighbor2      eta     zeta   lambda   thetas     rcut        fpmin        fpmax
+       C        O        O    0.005   16.000   -1.000    0.000    3.000 -1.000000000e+00 3.899136323e-02
+#MachineLearning model type
+atomic-NN
+#Activation function type
+tanh  # sigmoid, relu
+#Model Structure
+2
+5 5
+#Model Parameters
+C
+#
+O
+#Energy Scaling Parameters
+NoScaler
+1.00000000       0.00000000       #slope intercept

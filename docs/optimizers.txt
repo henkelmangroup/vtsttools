@@ -143,6 +143,8 @@ FIRE Parameters (IOPT = 7)
 ML-PYAMFF Parameters (IOPT = 8, only in vtstcode6.3) 
 ====================================================
 
+The ML-`PyAMFF`_ optimizer trains a Behler-Parrinello neural network (see Physical Review Letters 2007, 98 (14) for detail) and uses it as the basis for a separate optimization process in order to reach a local minimum or a saddle point on the surrogate PES. While the model is being retrained with the updated training set for each cycle, the overall number of DFT force calls required for the optimization will eventually decrease while retaining the accuracy level below a pre-set threshold value.
+
 +---------------+-----------+------------------------------------------------------------------+
 |Parameter      |Default    |Description                                                       |
 +===============+===========+==================================================================+
@@ -169,4 +171,51 @@ ML-PYAMFF Parameters (IOPT = 8, only in vtstcode6.3)
 |PYAMFF_MAXITER |30         |Maximum number of relaxation steps on ML potential energy surface |
 +---------------+-----------+------------------------------------------------------------------+
 
+ML-PyAMFF optimizer setup
+=========================
+
+Current version (vtstcode195) requires a formatted input model file (set by PYAMFF_MODEL) to use ML-PYAMFF optimizer. The formatted file needs following information:
+
+  1. Fingerprint types (Behler-Parrinello)
+  2. Element types
+  3. Minimum distance between elements
+  4. Behler-Parrnello fingerprint parameters 
+  5. Neural network parameters 
+
+An example of the file can be found in the Example section below. If you are already a `PyAMFF`_ user, you can use your model output file (mlff.pyamff) as it is.  
+
+Example
+=======
+
+  * Input file for neural networks: `mlff.pyamff`
+  
+  * Input files for optimizing a Cu13 cluster: `Cu13.tar.gz`_
+  * Completed calculation: `Cu13_complete.tar.gz`.
+
+  * Input files for NEB calculation of a vacancy diffusion on Au(111): `VacDiff_Au111.tar.gz`_
+  * Completed calculation: `VacDiff_Au111_complete.tar.gz`_.
+
+ML-PyAMFF optimizer output
+==========================
+
+The OUTCAR file has details of the calculation. This information is prefixed with the ML-PyAMFF tag. There are two main information:
+
+  1. Training information: The number of epochs to optimize models, their final loss, energy and force RMSE values
+  2. Machine-learned potential: The predicted force by the machine-learned potential and the number of steps taken on the potential. 
+
+NOTE from developers
+====================
+
+ML-PyAMFF optimizer has been recently added to vtstcode6.3. It is being actively developed currently so we are welcome anyone to try and report bugs! Please use our `discussion forum`_ to ask questions or report bugs.
+
 .. _paper: http://theory.cm.utexas.edu/henkelman/pubs/sheppard08_134106.pdf
+
+.. _PyAMFF: https://gitlab.com/pyamff/pyamff
+
+.. _mlff.pyamff: _static/ml_pyamff/mlff.pyamff 
+.. _Cu13.tar.gz: _static/ml_pyamff/Cu13.tar.gz
+.. _Cu13_complete.tar.gz: _static/ml_pyamff/Cu13_complete.tar.gz
+.. _VacDiff_Au111.tar.gz: _static/ml_pyamff/VacDiff_Au111.tar.gz
+.. _VacDiff_Au111_complete.tar.gz: _static/ml_pyamff/VacDiff_Au111_complete.tar.gz 
+
+.. _discussion forum: http://theory.cm.utexas.edu/forum
