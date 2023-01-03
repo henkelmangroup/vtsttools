@@ -187,7 +187,7 @@ An example of the file can be found in the Example section below. If you are alr
 Example
 =======
 
-  * Input file for neural networks: `mlff.pyamff`
+  * Input file for neural networks: `mlff.pyamff`_
   
   * Input files for optimizing a Cu13 cluster: `Cu13.tar.gz`_
   * Completed calculation: `Cu13_complete.tar.gz`.
