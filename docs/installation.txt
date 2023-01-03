@@ -73,13 +73,7 @@ To build the code, the VASP ``.objects`` and ``makefile`` need to be changed. Fi
 
 The objects ``dynmat.o``, ``neb.o``, ``dimer.o``, ``lanczos.o``, and ``instanton.o`` must be in the ``SOURCE`` list before ``chain.o`` appears. The optimizer objects, ``sd.o``, ``cg.o``, ``qm.o``, ``lbfgs.o``, ``bfgs.o``, ``fire.o`` (vtstcode 5 and vtstcode 6.1), ``ml_pyamff.o`` and all the objects in the ``pyamff_fortran/`` directory (vtstcode 6.3) must appear before the optimizer driver ``opt.o``.
 
-Then find the variable ``LIB`` in ``makefile`` that is inside ``src/``, and add the following directory after the last element of the list of library:
-
-**vtstcode5 and vtstcode6.1**
-
-.. code-block:: sh
-
-            LIB= lib parser 
+If you use vtstcode6.3, you need one more modification. Find the variable ``LIB`` in ``makefile`` that is inside ``src/``, and add the following directory after the last element of the list of library:
 
 **vtstcode6.3**
 
@@ -87,6 +81,12 @@ Then find the variable ``LIB`` in ``makefile`` that is inside ``src/``, and add 
         
             LIB= lib parser pyamff_fortran
 
+If you compile in parallel, you need to add libs to your ``dependencies`` in ``makefile```:
+
+.. code-block:: sh
+
+            dependencies: sources libs 
+  
 Nothing else needs to be done. This code will not change the working of any other part of vasp. This code will only be run if ``IMAGES`` is set in the ``INCAR`` file, or if ``ICHAIN`` is set, to specify which method should be run.
 
 - ``ICHAIN=0``: Nudged elastic band (default)
