@@ -12,7 +12,7 @@ The VTST•Tools has a fortran component which can be linked into the VASP code 
 Code change in the VASP main.F file
 ===================================
 
-In VTST v2.04 and later, a  modification is required in main.F for the solid-state NEB.
+In VTST v2.04 and later, a  modification is required in ``main.F`` for the solid-state NEB.
 
 Find and replace:
 
@@ -28,7 +28,7 @@ with
       CALL CHAIN_FORCE(T_INFO%NIONS,DYN%POSION,TOTEN,TIFOR, &
            TSIF,LATT_CUR%A,LATT_CUR%B,IO%IU6)
 
-For vasp.6.2 also find and replace:
+For vasp.6.2 and later, also find and replace:
 
 .. code-block:: sh
 
