@@ -47,7 +47,7 @@ Required Parameters
 +=========+=========+=============================================================+
 |IOPT	  |0	    |Default is to use the VASP optimizers			  |
 +---------+---------+-------------------------------------------------------------+
-|IBRION	  |3	    |pecify that VASP do molecular dynamics (with zero time step) |
+|IBRION	  |3	    |Specify that VASP do molecular dynamics (with zero time step) |
 +---------+---------+-------------------------------------------------------------+
 |POTIM	  |0	    |Zero time step so that VASP does not move the ions		  |
 +---------+---------+-------------------------------------------------------------+
