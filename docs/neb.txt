@@ -79,3 +79,4 @@ Here is an example `INCAR`_ for NEB.
 .. [#henkelman00_9978] G.\  Henkelman and H. Jónsson, Improved tangent estimate in the nudged elastic band method for finding minimum energy paths and saddle points, *J. Chem. Phys.* **113**, 9978-9985 (2000). `DOI <http://dx.doi.org/10.1063/1.1323224>`_
 
 .. _INCAR: _static/neb/INCAR
+
