@@ -42,6 +42,7 @@ Notice how the climbing image calculation has shifted the position of the images
 * The cNEB energies have been shifted by 0.05 eV so that the two curves are distinct.
 
 Here is an example `INCAR`_ for NEB.
+
 ------------
 
 [Nudged Elastic Band] Options

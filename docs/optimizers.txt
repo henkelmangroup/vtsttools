@@ -45,24 +45,24 @@ Required Parameters
 For these parameters, the listed values **must** be used:
 
 +-------------+---------+---------------------------------------------------------------+
-|Parameter    |Value    |Description						        |
+|Parameter    |Value    |Description                                                    |
 +=============+=========+===============================================================+
 |IBRION       |3    	|Specify that VASP do molecular dynamics (with zero time step)	|
 +-------------+---------+---------------------------------------------------------------+
-|POTIM        |0    	|Zero time step so that VASP does not move the ions		|
+|POTIM        |0    	|Zero time step so that VASP does not move the ions             |
 +-------------+---------+---------------------------------------------------------------+
 
 For these parameters, the user may use desired values:
 
-+-------------+---------+---------------------------------------------------------------+
-|Parameter    |Recommended    |Description						        |
-+=============+=========+===============================================================+
-|IOPT         |3    	|Quick-Min is the most beginner-friendly (default is IOPT=0)              		|
-+-------------+---------+---------------------------------------------------------------+
-|NSW          |100    	|Number of ionic relaxation steps (see VASP doc on `NSW`_)	|
-+-------------+---------+---------------------------------------------------------------+
-|EDIFFG       |-0.01   	|Must be negative (see VASP doc on `EDIFFG`_		|
-+-------------+---------+---------------------------------------------------------------+
++-------------+-----------+-------------------------------------------------------------+
+|Parameter    |Recommended|Description                                                  |
++=============+===========+=============================================================+
+|IOPT         |3          |Quick-Min is the most beginner-friendly (default is IOPT=0)  |
++-------------+-----------+-------------------------------------------------------------+
+|NSW          |100    	  |Number of ionic relaxation steps (see VASP doc on `NSW`_)	|
++-------------+-----------+-------------------------------------------------------------+
+|EDIFFG       |-0.01   	  |Must be negative (see VASP doc on `EDIFFG`_                  |
++-------------+-----------+-------------------------------------------------------------+
 
 
 ----------------
