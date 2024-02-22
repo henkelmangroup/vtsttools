@@ -42,15 +42,28 @@ The following parameters are read from the INCAR file.
 Required Parameters
 ============================
 
+For these parameters, the listed values **must** be used:
+
 +-------------+---------+---------------------------------------------------------------+
-|Parameter    |Default  |Description						        |
+|Parameter    |Value    |Description						        |
 +=============+=========+===============================================================+
-|IOPT         |0    	|Default is to use the VASP optimizers              		|
-+-------------+---------+---------------------------------------------------------------+
 |IBRION       |3    	|Specify that VASP do molecular dynamics (with zero time step)	|
 +-------------+---------+---------------------------------------------------------------+
 |POTIM        |0    	|Zero time step so that VASP does not move the ions		|
 +-------------+---------+---------------------------------------------------------------+
+
+For these parameters, the user may use desired values:
+
++-------------+---------+---------------------------------------------------------------+
+|Parameter    |Recommended    |Description						        |
++=============+=========+===============================================================+
+|IOPT         |3    	|Quick-Min is the most beginner-friendly (default is IOPT=0)              		|
++-------------+---------+---------------------------------------------------------------+
+|NSW          |100    	|Number of ionic relaxation steps (see VASP doc on `NSW`_)	|
++-------------+---------+---------------------------------------------------------------+
+|EDIFFG       |-0.01   	|Must be negative (see VASP doc on `EDIFFG`_		|
++-------------+---------+---------------------------------------------------------------+
+
 
 ----------------
 
@@ -209,6 +222,9 @@ NOTE from developers
 ML-PyAMFF optimizer has been recently added to vtstcode6.3. It is being actively developed currently so we are welcome anyone to try and report bugs! Please use our `discussion forum`_ to ask questions or report bugs.
 
 .. _paper: http://theory.cm.utexas.edu/henkelman/pubs/sheppard08_134106.pdf
+
+.. _NSW: https://www.vasp.at/wiki/index.php/NSW
+.. _EDIFFG: https://www.vasp.at/wiki/index.php/EDIFFG
 
 .. _PyAMFF: https://gitlab.com/pyamff/pyamff
 
