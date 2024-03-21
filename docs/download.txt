@@ -25,7 +25,7 @@ repository with the following command:
 
 .. code-block:: sh
 
-    svn co http://theory.cm.utexas.edu/svn/vtsttools
+    svn co https://theory.cm.utexas.edu/svn/vtsttools
 
 If you are a developer you can checkout the code using the command:
 
@@ -39,5 +39,5 @@ For more information on subversion read its `online documentation`_.
 
 .. _online documentation: http://svnbook.red-bean.com/en/1.5/index.html
 .. _Apache License version 2: http://www.apache.org/licenses/LICENSE-2.0
-.. _vtstcode-$(LATEST_VTSTCODE_REV).tgz: http://theory.cm.utexas.edu/code/vtstcode-$(LATEST_VTSTCODE_REV).tgz
-.. _vtstscripts.tgz: http://theory.cm.utexas.edu/code/vtstscripts.tgz
+.. _vtstcode-$(LATEST_VTSTCODE_REV).tgz: https://theory.cm.utexas.edu/code/vtstcode-$(LATEST_VTSTCODE_REV).tgz
+.. _vtstscripts.tgz: https://theory.cm.utexas.edu/code/vtstscripts.tgz
