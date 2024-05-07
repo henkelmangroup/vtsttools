@@ -107,7 +107,6 @@ Setting up a dynamical matrix calculation
  
 	The input is the eigenvalue files of both the minimum and the transition state. The output is the prefactor in inverse centimeters.
 
-
 -------------------------------
 
 Calculating additional degrees of freedom
