@@ -27,7 +27,7 @@ repository with the following command:
 
     svn co https://theory.cm.utexas.edu/svn/vtsttools
 
-If you are a developer you can checkout the code using the command: 
+If you are a developer you can checkout the code using the command:
 
 .. code-block:: sh
 
