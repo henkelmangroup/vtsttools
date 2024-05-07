@@ -47,12 +47,12 @@ Setting up a dynamical matrix calculation
  2. Generate a DISPLACECAR file from either: 
 
 	dymselsph.pl (POSCAR) (Central atom) (radius) (displacement)
-	- Selects atoms within a radius around the central atom(s) when calculating harmonic frequencies of a molecule.
+		- Selects atoms within a radius around the central atom(s) when calculating harmonic frequencies of a molecule.
 	
 	or
 	
 	dymseldsp.pl (POSCAR 1) (POSCAR 2) (atoms to include) (displacement)
-	- Selects the atoms with most displacement between two POSCAR files.
+		- Selects the atoms with most displacement between two POSCAR files.
 	
     This file is a 3 by N list of displacements where N is the number of atoms. A typical displacement and entry in this list is on the order of 0.001.
 
@@ -63,9 +63,13 @@ Setting up a dynamical matrix calculation
 
 
  4. Set up the INCAR file. You need to have the following variables set: 
-		ICHAIN=1
+ 
+		ICHAIN=1 
+		
 		POTIM=0.0 
+		
 		IMAGES=M (only if running in multiple geometries at once mode from step 2) 
+		
 		NSW=(DOF/M)+1 
  		
     **Note about setting the number of ionic steps, NSW** 
