@@ -54,12 +54,12 @@ Setting up a dynamical matrix calculation
 	dymseldsp.pl (POSCAR 1) (POSCAR 2) (atoms to include) (displacement)
 	- Selects the atoms with most displacement between two POSCAR files.
 	
-This file is a 3 by N list of displacements where N is the number of atoms. A typical displacement and entry in this list is on the order of 0.001.
+    This file is a 3 by N list of displacements where N is the number of atoms. A typical displacement and entry in this list is on the order of 0.001.
 
 
  3. Skip this step if you choose to run the calculation with a single image where a single displacement is calculated at a time.
 
-If you want to run in parallel (multiple images where many displacements are calculated simultaneously), you need to choose a number of images, M, which evenly divides the number of degrees of freedom (DOF) you displaced. Similarly to how a nudged elastic band calculation is set up, create M subdirectories numbered 01 to M, using two digits for each directory name. Place the POSCAR file in each subdirectories. 
+    If you want to run in parallel (multiple images where many displacements are calculated simultaneously), you need to choose a number of images, M, which evenly divides the number of degrees of freedom (DOF) you displaced. Similarly to how a nudged elastic band calculation is set up, create M subdirectories numbered 01 to M, using two digits for each directory name. Place the POSCAR file in each subdirectories. 
 
 
  4. Set up the INCAR file. You need to have the following variables set: 
@@ -68,8 +68,8 @@ If you want to run in parallel (multiple images where many displacements are cal
  		IMAGES=M (only if running in multiple geometries at once mode from step 2) 
  		NSW=(DOF/M)+1 
  		
-**Note about setting the number of ionic steps, NSW** 
-The reason for adding 1 to the NSW (number of ionic steps) is that each calculation first computes the forces on the initial structure before any displacements occur. In a single image calculation, the NSW should be one more than the total number of degrees of freedom. In a parallel calculation, NSW is calculated as one more than the number of degrees of freedom divided by the number of images, M. For example, in a single image calculation for the vibrational modes of ethane, with 3 degrees of freedom per atom for 8 atoms, the NSW would be 25. For a parallel calculation with M=4 images, set IMAGES=4 and NSW would be calculated as NSW=(24/4)+1=7.
+    **Note about setting the number of ionic steps, NSW** 
+    The reason for adding 1 to the NSW (number of ionic steps) is that each calculation first computes the forces on the initial structure before any displacements occur. In a single image calculation, the NSW should be one more than the total number of degrees of freedom. In a parallel calculation, NSW is calculated as one more than the number of degrees of freedom divided by the number of images, M. For example, in a single image calculation for the vibrational modes of ethane, with 3 degrees of freedom per atom for 8 atoms, the NSW would be 25. For a parallel calculation with M=4 images, set IMAGES=4 and NSW would be calculated as NSW=(24/4)+1=7.
 
 
  5. Run VASP after verifying that **POTCAR, POSCAR, INCAR, DISPLACECAR, and KPOINTS** files all exist and are properly configured. To ensure accuracy of calculated modes, the geometry in POSCAR should have first been optimized in VASP. All INCAR settings such as ISMEAR, SIGMA, PREC, etc. used in the geometry optimization should be present in the dynamical matrix INCAR as well. 
@@ -83,7 +83,7 @@ The reason for adding 1 to the NSW (number of ionic steps) is that each calculat
 		
 		dymmatrix.pl (OUTCAR1) (OUTCAR2) (OUTCAR3) ...
  
-The output of this script is the dynamical matrix, its eigenvalues, the normal mode frequencies and the normal mode eigenvectors. Some examples are: 
+    The output of this script is the dynamical matrix, its eigenvalues, the normal mode frequencies and the normal mode eigenvectors. Some examples are: 
    
 		Default, single calculation and single image: 
 			dymmatrix.pl or dymmatrix.pl DISPLACECAR OUTCAR 
@@ -105,7 +105,7 @@ The output of this script is the dynamical matrix, its eigenvalues, the normal m
  
 	dymprefactor.pl (freq.dat of minimum) (freq.dat of transition state)
  
-The input is the eigenvalue files of both the minimum and the transition state. The output is the prefactor in inverse centimeters.
+    The input is the eigenvalue files of both the minimum and the transition state. The output is the prefactor in inverse centimeters.
 
 -------------------------------
 
