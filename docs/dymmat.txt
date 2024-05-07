@@ -63,10 +63,10 @@ Setting up a dynamical matrix calculation
 
 
  4. Set up the INCAR file. You need to have the following variables set: 
- 		ICHAIN=1
- 		POTIM=0.0 
- 		IMAGES=M (only if running in multiple geometries at once mode from step 2) 
- 		NSW=(DOF/M)+1 
+		ICHAIN=1
+		POTIM=0.0 
+		IMAGES=M (only if running in multiple geometries at once mode from step 2) 
+		NSW=(DOF/M)+1 
  		
     **Note about setting the number of ionic steps, NSW** 
     The reason for adding 1 to the NSW (number of ionic steps) is that each calculation first computes the forces on the initial structure before any displacements occur. In a single image calculation, the NSW should be one more than the total number of degrees of freedom. In a parallel calculation, NSW is calculated as one more than the number of degrees of freedom divided by the number of images, M. For example, in a single image calculation for the vibrational modes of ethane, with 3 degrees of freedom per atom for 8 atoms, the NSW would be 25. For a parallel calculation with M=4 images, set IMAGES=4 and NSW would be calculated as NSW=(24/4)+1=7.
