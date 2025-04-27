@@ -62,7 +62,7 @@ To build the code, the VASP ``.objects`` and ``makefile`` need to be changed. Fi
             bfgs.o dynmat.o instanton.o lbfgs.o sd.o cg.o dimer.o bbm.o \
             fire.o lanczos.o neb.o qm.o opt.o
 
-**vtstcode6.3** 
+**vtstcode6.3/4/5** 
 
 .. code-block:: sh
 
@@ -73,9 +73,9 @@ To build the code, the VASP ``.objects`` and ``makefile`` need to be changed. Fi
 
 The objects ``dynmat.o``, ``neb.o``, ``dimer.o``, ``lanczos.o``, and ``instanton.o`` must be in the ``SOURCE`` list before ``chain.o`` appears. The optimizer objects, ``sd.o``, ``cg.o``, ``qm.o``, ``lbfgs.o``, ``bfgs.o``, ``fire.o`` (vtstcode 5 and vtstcode 6.1), ``ml_pyamff.o`` and all the objects in the ``pyamff_fortran/`` directory (vtstcode 6.3) must appear before the optimizer driver ``opt.o``.
 
-If you use vtstcode6.3, you need one more modification. Find the variable ``LIB`` in ``makefile`` that is inside ``src/``, and add the following directory after the last element of the list of library:
+If you use vtstcode6.3/4/5, you need one more modification. Find the variable ``LIB`` in ``makefile`` that is inside ``src/``, and add the following directory after the last element of the list of library:
 
-**vtstcode6.3**
+**vtstcode6.3/4/5**
 
 .. code-block:: sh
         
