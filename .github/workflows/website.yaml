@@ -30,5 +30,3 @@ jobs:
         with:
           branch: gh-pages
           folder: ./docs/_build/html
-
-w
