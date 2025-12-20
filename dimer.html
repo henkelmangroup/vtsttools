@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>THE DIMER METHOD &mdash; Transition State Tools for VASP</title>
+    <link rel="stylesheet" href="_static/henk.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    './',
+          VERSION:     '3.1',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sphinx_highlight.js"></script>
+    <link rel="contents" title="Global table of contents" href="contents.html" />
+    <link rel="index" title="Global index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Transition State Tools for VASP" href="index.html" />
+    <link rel="next" title="LANCZOS" href="lanczos.html" />
+    <link rel="prev" title="Nudged Elastic Band" href="neb.html" />
+  </head>
+  <body>
+    <div class="related">
+            <!-- <h3>[[ builder == 'web' and 'Keyword' or 'Quick' ]] search</h3> -->
+        <div class="toprightsearch" style="float:right; position: relative;  top: 15px">
+            <form class="search" action="search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+
+      <!-- <h3>Navigation</h3> -->
+      <ul>
+
+    <!-- <li>  &raquo; <a href="download.html">Download</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="setups/setups.html">Setups</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="tutorials/tutorials.html">Tutorials</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="documentation/documentation.html">Documentation</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="performance.html">Performance</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="faq.html">FAQ</a> &raquo;</li> -->
+<!--        <li>  &raquo; <a href="contents.html">Contents</a> &raquo;</li>  -->
+        <!-- <li>  &raquo; <a href="genindex.html">Index</a> &raquo;</li> -->
+    
+
+      </ul>
+    </div>
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <section id="the-dimer-method">
+<span id="dimer"></span><h1>THE DIMER METHOD<a class="headerlink" href="#the-dimer-method" title="Link to this heading">¶</a></h1>
+<p>The dimer method is one of the min-mode following methods that allows the user to start from any initial configuration and search for a nearby saddle point. This method can also be used to start from a minimum basin and search in random directions for saddle points. In some simple systems, reaction endpoints can be guessed, and the nudged elastic band can be used to find reaction pathways. In more complex systems, it has been shown that reactions often take place via unexpected mechanisms. The dimer method is designed to deal with this problem by searching for saddle points corresponding to unknown reaction mechanisms.</p>
+<hr class="docutils" />
+<section id="dimer-calculation-setup">
+<h2>Dimer calculation setup<a class="headerlink" href="#dimer-calculation-setup" title="Link to this heading">¶</a></h2>
+<p>The setup for a dimer calculation is similar to a regular VASP calculation. The following input files are needed:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><strong>POTCAR</strong> and <strong>KPOINTS</strong>: These files are prepared as normal.</p></li>
+<li><dl class="simple">
+<dt><strong>INCAR</strong>: This file has all the usual variables, but it must also contain:</dt><dd><ul class="simple">
+<li><p>IBRION=3</p></li>
+<li><p>POTIM=0</p></li>
+<li><p>Some value of IOPT (2 is recommended)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Initial POSCAR</strong>: This file contains the starting configuration for the calculation which could be:</dt><dd><ul class="simple">
+<li><p>A point near a known saddle</p></li>
+<li><p>A configuration that is far away from a saddle, such as near an initial minimum</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>MODECAR</strong>: This file contains the initial direction along the dimer, represented as a unit vector to estimate of the system’s lowest curvature mode. If no MODECAR is specified, a random direction will be used. Creating a MODECAR file is strongly recommended. Understanding the lowest curvature mode is not necessary, the key aspect of the MODECAR file is that the significant components of the vector be in the coordinates likely involved in the reaction. The MODECAR file can be automatically generated if an NEB calculation is used as a starting point with the <code class="docutils literal notranslate"><span class="pre">neb2dim.pl</span></code> script. Another method is to use the vector between initial and final states, or between a known minimum and the initial POSCAR file. Use the ‘’modemake.pl’’ script to generate a MODECAR file that represents the direction between two configurations.</p></li>
+</ol>
+</div></blockquote>
+<p>One use of the dimer method is to accurately converge upon a saddle point, starting from an NEB calculation. The dimer method requires fewer images than the NEB, so it can be more efficient to use the dimer method, particularly when testing convergence with a higher energy cutoff or a finer k-point mesh. For these kinds of calculations, the initial files can be generated automatically using the neb2dim.pl script. This will generate and initial POSCAR file at the interpolated saddle, and an initial MODECAR file along the direction through which the NEB passes though this point.</p>
+</section>
+<hr class="docutils" />
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>Input files for H diffusion in a frozen Ir lattice: <a class="reference external" href="_static/dimer/dimrun.tar.gz">dimrun.tar.gz</a>.</p></li>
+<li><p>Completed calculation: <a class="reference external" href="_static/dimer/dimrun_complete.tar.gz">dimrun_complete.tar.gz</a>.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="dimer-input-parameters">
+<h2>Dimer input parameters<a class="headerlink" href="#dimer-input-parameters" title="Link to this heading">¶</a></h2>
+<p>The following parameters are read from the <a class="reference external" href="_static/dimer/INCAR">INCAR</a> file. Dimer specific parameters start with D.</p>
+</section>
+<section id="required-parameters">
+<h2>Required Parameters<a class="headerlink" href="#required-parameters" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default
+Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ICHAIN</p></td>
+<td><p>2</p></td>
+<td><p>Use the dimer method (required for the latest code)</p></td>
+</tr>
+<tr class="row-odd"><td><p>IBRION</p></td>
+<td><p>3</p></td>
+<td><p>Specify that VASP do MD with a zero time step</p></td>
+</tr>
+<tr class="row-even"><td><p>POTIM</p></td>
+<td><p>0</p></td>
+<td><p>Zero time step so that VASP does not move the ions</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="standard-parameters">
+<h2>Standard Parameters<a class="headerlink" href="#standard-parameters" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>DdR</p></td>
+<td><p>5E-3</p></td>
+<td><p>The dimer separation (twice the distance between images)</p></td>
+</tr>
+<tr class="row-even"><td><p>DRotMax</p></td>
+<td><p>1</p></td>
+<td><p>Maximum number of rotation steps per translation step</p></td>
+</tr>
+<tr class="row-odd"><td><p>DFNMin</p></td>
+<td><p>0.01</p></td>
+<td><p>Magnitude of the rotational force below which the dimer is not rotated</p></td>
+</tr>
+<tr class="row-even"><td><p>DFNMax</p></td>
+<td><p>1.0</p></td>
+<td><p>Magnitude of the rotational force below which dimer rotation stops; if the
+rotational force is between DFNMin and DFNMax, at least one rotational
+iteration is done</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="dimer-output">
+<h2>Dimer output<a class="headerlink" href="#dimer-output" title="Link to this heading">¶</a></h2>
+<p>The DIMCAR can give a quick idea of how the dimer is converging. The file contains the following data for each iteration in the six columns:</p>
+<p>The OUTCAR file has details of the calculation. This information is prefixed with the Dimer tag.</p>
+<p>A summary of the important parameters are written to the <strong>DIMCAR</strong> file. The values in the columns are:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><strong>Step</strong>: The number of translation steps. Note that there can be several rotations per step.</p></li>
+<li><p><strong>Force</strong>: The maximum force on any degree of freedom in the system. The run will converge when this value is lower than the value of -EDIFFG in the INCAR file and the curvature is negative.</p></li>
+<li><p><strong>Torque</strong>: The rotational force on the dimer, indicates the accuracy of the lowest mode.</p></li>
+<li><p><strong>Energy</strong>: The energy of the center of the dimer. NOTE: this is not the extrapolated energy without entropy, and it should not be taken as the saddle point energy. This should be obtained from the OUTCAR file.</p></li>
+<li><p><strong>Curvature</strong>: The curvature along the dimer. This is the current best estimate of the lowest curvature mode. Both the curvature and force best indicates how close the dimer is to a saddle point region. A negative curvature accompanied by a decreasing force (FMax) suggests a convergence towards a saddle. A positive saddle implies the calculation needs to continue.</p></li>
+<li><p><strong>Angle</strong>: The angle through which the dimer is rotated. It may start high but should drop and remain low during convergence. If this consistently stays high (~1), it indicates a problem.</p></li>
+</ol>
+</div></blockquote>
+<p>The most important variables are the <strong>Force, Torque and the Curvature</strong>. One should see the Torque drop systematically as the dimer rotates. If this does not happen, the forces are not accurate enough, and ediff should be lowered to around 1E-7 or 1E-8. The finite difference distance, DdR can also be increased as high as 0.01 Angstrom. To see if the dimer is converging, check if the Force is dropping, and the Curvature is consistently negative. If the force is large or the curvature is positive, the method is not near a saddle point. This is not necessarily a problem, it just means that it is not near convergence.</p>
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+
+          <h3><a href="index.html">VTST</a></h3>  
+      <ul class="this-page-menu">
+        <li><a href="download.html">Download</a></li>
+        <li><a href="installation.html">Installation</a></li>
+        <li><a href="neb.html">NEB</a></li>
+	<li><a href="dymmat.html">Dynamical Matrix</a></li>
+        <li><a href="#">Dimer</a></li>
+        <li><a href="lanczos.html">Lanczos</a></li>
+        <li><a href="optimizers.html">Optimizers</a></li>
+        <li><a href="scripts.html">Scripts</a></li>
+        <li><a href="references.html">References</a></li>
+      </ul>
+
+
+      <h3>Development</h3>
+      <ul class="this-page-menu">
+            <li><a href="http://theory.cm.utexas.edu/redmine/projects/vtsttools/repository">Source Code Browser</a></li>
+            <li><a href="http://theory.cm.utexas.edu/redmine/projects/vtsttools/issues">Bug       Tracker</a></li>
+          </ul>
+            <h3>This page</h3>
+            <ul>
+<li><a class="reference internal" href="#">THE DIMER METHOD</a><ul>
+<li><a class="reference internal" href="#dimer-calculation-setup">Dimer calculation setup</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#dimer-input-parameters">Dimer input parameters</a></li>
+<li><a class="reference internal" href="#required-parameters">Required Parameters</a></li>
+<li><a class="reference internal" href="#standard-parameters">Standard Parameters</a></li>
+<li><a class="reference internal" href="#dimer-output">Dimer output</a></li>
+</ul>
+</li>
+</ul>
+
+      <!-- Where does one find this "prev" variable?
+      
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="neb.html"
+            title="previous chapter">Nudged Elastic Band</a></p>
+        -->
+            <ul class="this-page-menu">
+              <li><a href="_sources/dimer.txt">Page Source</a></li>  <!-- label changed from "Show source" to avoid confusion with the source code svn link -->
+            </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+<!-- 
+Remove footer.  Sphinx will actually parse anything with curly braces even if
+it is inside a comment.  The footer can be added by removing this comment
+and replacing [] by corresponding curly brackets
+[%- block relbar2 %][[ relbar() ]][% endblock %] 
+-->
+    <div class="footer">
+<!--
+      <div class="sidebarfooter">
+        <a href="http://validator.w3.org/check?uri=http://wiki.fysik.dtu.dk/gpaw/dimer.html">
+          <img src="http://www.w3.org/Icons/valid-xhtml10"
+            alt="Valid XHTML 1.0 Transitional" height="31" width="88" />
+        </a>
+      </div>
+      &copy; Copyright 2015, Henkelman Group.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 9.0.4.-->
+    </div>
+  </body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>DYNAMICAL MATRIX &mdash; Transition State Tools for VASP</title>
+    <link rel="stylesheet" href="_static/henk.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    './',
+          VERSION:     '3.1',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sphinx_highlight.js"></script>
+    <link rel="contents" title="Global table of contents" href="contents.html" />
+    <link rel="index" title="Global index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Transition State Tools for VASP" href="index.html" />
+    <link rel="prev" title="References" href="references.html" />
+  </head>
+  <body>
+    <div class="related">
+            <!-- <h3>[[ builder == 'web' and 'Keyword' or 'Quick' ]] search</h3> -->
+        <div class="toprightsearch" style="float:right; position: relative;  top: 15px">
+            <form class="search" action="search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+
+      <!-- <h3>Navigation</h3> -->
+      <ul>
+
+    <!-- <li>  &raquo; <a href="download.html">Download</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="setups/setups.html">Setups</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="tutorials/tutorials.html">Tutorials</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="documentation/documentation.html">Documentation</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="performance.html">Performance</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="faq.html">FAQ</a> &raquo;</li> -->
+<!--        <li>  &raquo; <a href="contents.html">Contents</a> &raquo;</li>  -->
+        <!-- <li>  &raquo; <a href="genindex.html">Index</a> &raquo;</li> -->
+    
+
+      </ul>
+    </div>
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <section id="dynamical-matrix">
+<span id="dymmat"></span><h1>DYNAMICAL MATRIX<a class="headerlink" href="#dynamical-matrix" title="Link to this heading">¶</a></h1>
+<p>The dynamical matrix code in VASP allows for the calculation of harmonic frequencies of and the prefactor of a reaction. The formalism was developed by Vineyard, and the Arrhenius rate includes the Vineyard prefactor. The basic idea is that the potential is assumed to be harmonic for both the initial state and the transition state. With this assumption, one can formulate the migration prefactor (the product of the attempt frequency and the exponential of the migration entropy over k) as the ratio of the products of the frequencies of the normal modes of the initial state over the transition state. Another way of saying this is that the entropy of the initial and transition state is evaluated using a harmonic approximation.
+To be able to do a dynamical matrix calculation for a prefactor, one needs to know beforehand both the initial state and the transition state. The <a class="reference external" href="neb.html">nudged elastic band</a>. (NEB) method and the <a class="reference external" href="dimer.html">dimer</a> method are two ways of locating transition states.</p>
+<p>The dynamical matrix calculation may also be used to calculate the harmonic frequencies and modes of a given molecule whose geometry has already been optimized in VASP. This dynamical matrix calculation requires only beforehand knowledge of the equilibrium optimized geometry of the initial state.</p>
+<p>In implementing the dynamical matrix calculation in VASP, several support programs have been written, both to help set up the calculation as well as process the output. A page describing these programs, most of which are Perl scripts, can be found <a class="reference external" href="scripts.html#dynamical-matrix">here</a>.</p>
+<hr class="docutils" />
+<section id="required-parameters">
+<h2>Required Parameters<a class="headerlink" href="#required-parameters" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default
+Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ICHAIN</p></td>
+<td><p>1</p></td>
+<td><p>Use the Dynamical Matrix method</p></td>
+</tr>
+<tr class="row-odd"><td><p>IBRION</p></td>
+<td><p>3</p></td>
+<td><p>Specify that VASP do MD with a zero time step</p></td>
+</tr>
+<tr class="row-even"><td><p>POTIM</p></td>
+<td><p>0</p></td>
+<td><p>Zero time step so that VASP does not move the ions</p></td>
+</tr>
+<tr class="row-odd"><td><p>EDIFF</p></td>
+<td><p>1E-8</p></td>
+<td><p>Strict force criteria to accurately find force differences (curvature)</p></td>
+</tr>
+<tr class="row-even"><td><p>EDIFFG</p></td>
+<td><p>-1E-8</p></td>
+<td><p>Make sure that vasp does not quit if the forces are low</p></td>
+</tr>
+<tr class="row-odd"><td><p>NSW</p></td>
+<td><p>DOF+1</p></td>
+<td><p>Do a force call at equilibrium and along each degree of freedom</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="setting-up-a-dynamical-matrix-calculation">
+<h2>Setting up a dynamical matrix calculation<a class="headerlink" href="#setting-up-a-dynamical-matrix-calculation" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p>Compile a version of VASP with the vtst <a class="reference external" href="download.html">source</a>.</p></li>
+<li><p>Generate a DISPLACECAR file from either:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>dymselsph.pl (POSCAR) (Central atom) (radius) (displacement)</dt><dd><ul class="simple">
+<li><p>Selects atoms within a radius around the central atom(s) when calculating harmonic frequencies of a molecule.</p></li>
+</ul>
+</dd>
+</dl>
+<p>or</p>
+<dl class="simple">
+<dt>dymseldsp.pl (POSCAR 1) (POSCAR 2) (atoms to include) (displacement)</dt><dd><ul class="simple">
+<li><p>Selects the atoms with most displacement between two POSCAR files.</p></li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<p>This file is a 3 by N list of displacements where N is the number of atoms. A typical displacement and entry in this list is on the order of 0.001.</p>
+</li>
+<li><p>Skip this step if you choose to run the calculation with a single image where a single displacement is calculated at a time.</p>
+<p>If you want to run in parallel (multiple images where many displacements are calculated simultaneously), you need to choose a number of images, M, which evenly divides the number of degrees of freedom (DOF) you displaced. Similarly to how a nudged elastic band calculation is set up, create M subdirectories numbered 01 to M, using two digits for each directory name. Place the POSCAR file in each subdirectories.</p>
+</li>
+<li><p>Set up the INCAR file. You need to have the following variables set:</p>
+<blockquote>
+<div><p>ICHAIN=1</p>
+<p>POTIM=0.0</p>
+<p>IMAGES=M (only if running in multiple geometries at once mode from step 2)</p>
+<p>NSW=(DOF/M)+1</p>
+</div></blockquote>
+<p><strong>Note about setting the number of ionic steps, NSW</strong>
+The reason for adding 1 to the NSW (number of ionic steps) is that each calculation first computes the forces on the initial structure before any displacements occur. In a single image calculation, the NSW should be one more than the total number of degrees of freedom. In a parallel calculation, NSW is calculated as one more than the number of degrees of freedom divided by the number of images, M. For example, in a single image calculation for the vibrational modes of ethane, with 3 degrees of freedom per atom for 8 atoms, the NSW would be 25. For a parallel calculation with M=4 images, set IMAGES=4 and NSW would be calculated as NSW=(24/4)+1=7.</p>
+</li>
+<li><p>Run VASP after verifying that <strong>POTCAR, POSCAR, INCAR, DISPLACECAR, and KPOINTS</strong> files all exist and are properly configured. To ensure accuracy of calculated modes, the geometry in POSCAR should have first been optimized in VASP. All INCAR settings such as ISMEAR, SIGMA, PREC, etc. used in the geometry optimization should be present in the dynamical matrix INCAR as well.</p></li>
+<li><p>Extract the force constants from the output using the dymmatrix.pl script specified in one of the following formats:</p>
+<blockquote>
+<div><p>dymmatrix.pl (DISPLACECAR) (OUTCAR)</p>
+<p>dymmatrix.pl (#DISPLACECAR) (DISPLACECAR1) (DISPLACECAR2) …</p>
+<p>dymmatrix.pl (OUTCAR1) (OUTCAR2) (OUTCAR3) …</p>
+</div></blockquote>
+<p>The output of this script is the dynamical matrix, its eigenvalues, the normal mode frequencies and the normal mode eigenvectors. Some examples are:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Default, single calculation and single image:</dt><dd><p>dymmatrix.pl or dymmatrix.pl DISPLACECAR OUTCAR</p>
+</dd>
+<dt>Single calculation with multiple images:</dt><dd><p>dymmatrix.pl 1 DISPLACECAR ??/OUTCAR</p>
+</dd>
+<dt>Multiple calculations with n DISPLACECAR and OUTCAR files:</dt><dd><p>dymmatrix.pl n DISPLACECAR1 .. DISPLACECAR[n] OUTCAR1 .. OUTCAR[n]</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p>If all calculated frequencies are zero, check the EDIFFG tag in dynamical matrix INCAR. AFTER geometry minimization when running the dynamical matrix code, this INCAR tag may be set arbitrarily small to prevent premature termination of the job (as if minimum structural accuracy had been obtained). The number of force calls made should be equal to the number specified in the NSW tag.</p></li>
+<li><p>Check for convergence of frequencies with respect to all parameters, and particularly the finite difference magnitude in the DISPLACECAR file, the accuracy of the forces (EDIFF) and the magnitude of the smearing. A small smearing value is particularly important for calculating the normal modes of molecules with large homo-lumo gaps.</p></li>
+<li><p>Calculate the prefactor (not for simple frequency analysis) with dymprefactor.pl.</p>
+<blockquote>
+<div><p>dymprefactor.pl (freq.dat of minimum) (freq.dat of transition state)</p>
+</div></blockquote>
+<p>The input is the eigenvalue files of both the minimum and the transition state. The output is the prefactor in inverse centimeters.</p>
+</li>
+</ol>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="calculating-additional-degrees-of-freedom">
+<h2>Calculating additional degrees of freedom<a class="headerlink" href="#calculating-additional-degrees-of-freedom" title="Link to this heading">¶</a></h2>
+<p>This completes one prefactor calculation. If you want to do another calculation with the same system, but including more degrees of freedom, then you need to:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Save the OUTCAR files from the previous calculation.</p></li>
+<li><p>Create the new DISPLACECAR as above.</p></li>
+<li><p>Generate the difference between the new and old DISPLACECAR with the dymcmpdisp.pl program. You will run the dynamical matrix code with the output of this program.</p></li>
+<li><p>Modify NSW in your INCAR file as before.</p></li>
+<li><p>Run Vasp.</p></li>
+<li><p>Extract the forces from the OUTCAR files. Use dymmatrix.pl to do this. To do this, you will need the DISPLACECAR from the original calculation, the DISPLACECAR from this calculation, and all of the corresponding OUTCARs. Again, the second and subsequent DISPLACECARs should only contain the new degrees of freedom not calculated before.</p></li>
+</ol>
+</div></blockquote>
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+
+          <h3><a href="index.html">VTST</a></h3>  
+      <ul class="this-page-menu">
+        <li><a href="download.html">Download</a></li>
+        <li><a href="installation.html">Installation</a></li>
+        <li><a href="neb.html">NEB</a></li>
+	<li><a href="#">Dynamical Matrix</a></li>
+        <li><a href="dimer.html">Dimer</a></li>
+        <li><a href="lanczos.html">Lanczos</a></li>
+        <li><a href="optimizers.html">Optimizers</a></li>
+        <li><a href="scripts.html">Scripts</a></li>
+        <li><a href="references.html">References</a></li>
+      </ul>
+
+
+      <h3>Development</h3>
+      <ul class="this-page-menu">
+            <li><a href="http://theory.cm.utexas.edu/redmine/projects/vtsttools/repository">Source Code Browser</a></li>
+            <li><a href="http://theory.cm.utexas.edu/redmine/projects/vtsttools/issues">Bug       Tracker</a></li>
+          </ul>
+            <h3>This page</h3>
+            <ul>
+<li><a class="reference internal" href="#">DYNAMICAL MATRIX</a><ul>
+<li><a class="reference internal" href="#required-parameters">Required Parameters</a></li>
+<li><a class="reference internal" href="#setting-up-a-dynamical-matrix-calculation">Setting up a dynamical matrix calculation</a></li>
+<li><a class="reference internal" href="#calculating-additional-degrees-of-freedom">Calculating additional degrees of freedom</a></li>
+</ul>
+</li>
+</ul>
+
+      <!-- Where does one find this "prev" variable?
+      
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="references.html"
+            title="previous chapter">References</a></p>
+        -->
+            <ul class="this-page-menu">
+              <li><a href="_sources/dymmat.txt">Page Source</a></li>  <!-- label changed from "Show source" to avoid confusion with the source code svn link -->
+            </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+<!-- 
+Remove footer.  Sphinx will actually parse anything with curly braces even if
+it is inside a comment.  The footer can be added by removing this comment
+and replacing [] by corresponding curly brackets
+[%- block relbar2 %][[ relbar() ]][% endblock %] 
+-->
+    <div class="footer">
+<!--
+      <div class="sidebarfooter">
+        <a href="http://validator.w3.org/check?uri=http://wiki.fysik.dtu.dk/gpaw/dymmat.html">
+          <img src="http://www.w3.org/Icons/valid-xhtml10"
+            alt="Valid XHTML 1.0 Transitional" height="31" width="88" />
+        </a>
+      </div>
+      &copy; Copyright 2015, Henkelman Group.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 9.0.4.-->
+    </div>
+  </body>
+</html>

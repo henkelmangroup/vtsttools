@@ -1,0 +1,465 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>FORCE BASED OPTIMIZERS &mdash; Transition State Tools for VASP</title>
+    <link rel="stylesheet" href="_static/henk.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    './',
+          VERSION:     '3.1',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sphinx_highlight.js"></script>
+    <link rel="contents" title="Global table of contents" href="contents.html" />
+    <link rel="index" title="Global index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Transition State Tools for VASP" href="index.html" />
+    <link rel="next" title="SCRIPTS" href="scripts.html" />
+    <link rel="prev" title="LANCZOS" href="lanczos.html" />
+  </head>
+  <body>
+    <div class="related">
+            <!-- <h3>[[ builder == 'web' and 'Keyword' or 'Quick' ]] search</h3> -->
+        <div class="toprightsearch" style="float:right; position: relative;  top: 15px">
+            <form class="search" action="search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+
+      <!-- <h3>Navigation</h3> -->
+      <ul>
+
+    <!-- <li>  &raquo; <a href="download.html">Download</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="setups/setups.html">Setups</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="tutorials/tutorials.html">Tutorials</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="documentation/documentation.html">Documentation</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="performance.html">Performance</a> &raquo;</li> -->
+        <!-- <li>  &raquo; <a href="faq.html">FAQ</a> &raquo;</li> -->
+<!--        <li>  &raquo; <a href="contents.html">Contents</a> &raquo;</li>  -->
+        <!-- <li>  &raquo; <a href="genindex.html">Index</a> &raquo;</li> -->
+    
+
+      </ul>
+    </div>
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <section id="force-based-optimizers">
+<span id="optimizers"></span><h1>FORCE BASED OPTIMIZERS<a class="headerlink" href="#force-based-optimizers" title="Link to this heading">¶</a></h1>
+<p>The NEB and min-mode following (dimer/Lanczos) saddle point finding methods use a force projection in order to direct the optimizers towards minimum energy paths and saddle points. These modifications to the force mean that the energy is no longer consistent with the force being optimized. Because of this, we can only use optimizers that are solely based upon the force (and not the energy). The quasi-Newton and quick-min (IBRION=1 and 3 respectively) optimizers that are built into VASP are both force-based, but the conjugate-gradient method (IBRION=2) is not.</p>
+<p>Here, we present a set of optimizers that are all force-based so they can be used with the NEB and min-mode following methods. To use them, the INCAR must set IBRION=3 and POTIM=0, to disable the built in optimizers. Then, the IOPT parameter will select one of the following methods.</p>
+<p>This version of quick-min is essential the same as what has been implemented in vasp. The conjugate-gradient method is different in that is uses a Newton’s line optimizer, and are entirely force based. The LBFGS is also different in that the NEB can be optimized globally, instead of image-by-image. The FIRE optimizer is an interesting new optimizer which has similarities to quick-min, but tends to be faster. The steepest descent method is provided primarily for testing. We recommend using CG or LBFGS when accurate forces are available. This is essential for evaluating curvatures. For high forces (far from the minimum) or inaccurate forces (close to the minimum) the quick-min or FIRE methods are recommended. These two methods do not rely on curvatures, and tend to be less aggressive, better behaved, but also less efficient than CG/LBFGS.</p>
+<p>Here is a recent <a class="reference external" href="http://theory.cm.utexas.edu/henkelman/pubs/sheppard08_134106.pdf">paper</a> discussing the performance of these different optimizers with the NEB.</p>
+<p>The min-mode following methods can only be used with one of these methods. If IOPT is not set in a dimer run, the job with die with a corresponding error message.</p>
+<hr class="docutils" />
+<section id="optimizer-input-parameters">
+<h2>Optimizer input parameters<a class="headerlink" href="#optimizer-input-parameters" title="Link to this heading">¶</a></h2>
+<p>The following parameters are read from the INCAR file.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>(IOPT = 0) Use VASP optimizers specified from IBRION (default)</p></td>
+</tr>
+<tr class="row-even"><td><p>(IOPT = 1) LBFGS = Limited-memory Broyden-Fletcher-Goldfarb-Shanno</p></td>
+</tr>
+<tr class="row-odd"><td><p>(IOPT = 2) CG = Conjugate Gradient</p></td>
+</tr>
+<tr class="row-even"><td><p>(IOPT = 3) QM = Quick-Min</p></td>
+</tr>
+<tr class="row-odd"><td><p>(IOPT = 4) SD = Steepest Descent</p></td>
+</tr>
+<tr class="row-even"><td><p>(IOPT = 7) FIRE = Fast Inertial Relaxation Engine</p></td>
+</tr>
+<tr class="row-odd"><td><p>(IOPT = 8) ML-PYAMFF = Machine learning (PyAMFF)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="required-parameters">
+<h2>Required Parameters<a class="headerlink" href="#required-parameters" title="Link to this heading">¶</a></h2>
+<p>For these parameters, the listed values <strong>must</strong> be used:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>IBRION</p></td>
+<td><p>3</p></td>
+<td><p>Specify that VASP do molecular dynamics (with zero time step)</p></td>
+</tr>
+<tr class="row-odd"><td><p>POTIM</p></td>
+<td><p>0</p></td>
+<td><p>Zero time step so that VASP does not move the ions</p></td>
+</tr>
+</tbody>
+</table>
+<p>For these parameters, the user may use desired values:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Recommended</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>IOPT</p></td>
+<td><p>3</p></td>
+<td><p>Quick-Min is the most beginner-friendly (default is IOPT=0)</p></td>
+</tr>
+<tr class="row-odd"><td><p>NSW</p></td>
+<td><p>100</p></td>
+<td><p>Number of ionic relaxation steps (see VASP doc on <a class="reference external" href="https://www.vasp.at/wiki/index.php/NSW">NSW</a>)</p></td>
+</tr>
+<tr class="row-even"><td><p>EDIFFG</p></td>
+<td><p>-0.01</p></td>
+<td><p>Must be negative (see VASP doc on <a class="reference external" href="https://www.vasp.at/wiki/index.php/EDIFFG">EDIFFG</a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="lbfgs-parameters-iopt-1">
+<h2>LBFGS Parameters (IOPT = 1)<a class="headerlink" href="#lbfgs-parameters-iopt-1" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MAXMOVE</p></td>
+<td><p>0.2</p></td>
+<td><p>Maximum allowed step size for translation</p></td>
+</tr>
+<tr class="row-odd"><td><p>ILBFGSMEM</p></td>
+<td><p>20</p></td>
+<td><p>Number of steps saved when building the inverse Hessian matrix</p></td>
+</tr>
+<tr class="row-even"><td><p>LGLOBAL</p></td>
+<td><p>.TRUE.</p></td>
+<td><p>Optimize the NEB globally instead of image-by-image</p></td>
+</tr>
+<tr class="row-odd"><td><p>LAUTOSCALE</p></td>
+<td><p>.TRUE.</p></td>
+<td><p>Automatically determines INVCURV</p></td>
+</tr>
+<tr class="row-even"><td><p>INVCURV</p></td>
+<td><p>0.01</p></td>
+<td><p>Initial inverse curvature, used to construct the inverse
+Hessian matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p>LLINEOPT</p></td>
+<td><p>.FALSE.</p></td>
+<td><p>Use a force based line minimizer for translation</p></td>
+</tr>
+<tr class="row-even"><td><p>FDSTEP</p></td>
+<td><p>5E-3</p></td>
+<td><p>Finite difference step size for line optimizer</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="cg-parameters-iopt-2">
+<h2>CG Parameters (IOPT = 2)<a class="headerlink" href="#cg-parameters-iopt-2" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MAXMOVE</p></td>
+<td><p>0.2</p></td>
+<td><p>Maximum allowed step size for translation</p></td>
+</tr>
+<tr class="row-odd"><td><p>FDSTEP</p></td>
+<td><p>5E-3</p></td>
+<td><p>Finite difference step size to calculate curvature</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="qm-parameters-iopt-3">
+<h2>QM Parameters (IOPT = 3)<a class="headerlink" href="#qm-parameters-iopt-3" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MAXMOVE</p></td>
+<td><p>0.2</p></td>
+<td><p>Maximum allowed step size for translation</p></td>
+</tr>
+<tr class="row-odd"><td><p>TIMESTEP</p></td>
+<td><p>0.1</p></td>
+<td><p>Dynamical time step</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="sd-parameters-iopt-4">
+<h2>SD Parameters (IOPT = 4)<a class="headerlink" href="#sd-parameters-iopt-4" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MAXMOVE</p></td>
+<td><p>0.2</p></td>
+<td><p>Maximum allowed step size for translation</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDALPHA</p></td>
+<td><p>0.01</p></td>
+<td><p>Ratio between force and step size</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="fire-parameters-iopt-7">
+<h2>FIRE Parameters (IOPT = 7)<a class="headerlink" href="#fire-parameters-iopt-7" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MAXMOVE</p></td>
+<td><p>0.2</p></td>
+<td><p>Maximum allowed step size for translation</p></td>
+</tr>
+<tr class="row-odd"><td><p>TIMESTEP</p></td>
+<td><p>0.1</p></td>
+<td><p>Dynamical time step</p></td>
+</tr>
+<tr class="row-even"><td><p>FTIMEMAX</p></td>
+<td><p>1.0</p></td>
+<td><p>Maximum dynamical time step allowed</p></td>
+</tr>
+<tr class="row-odd"><td><p>FTIMEDEC</p></td>
+<td><p>0.5</p></td>
+<td><p>Factor to decrease dt</p></td>
+</tr>
+<tr class="row-even"><td><p>FTIMEINC</p></td>
+<td><p>1.1</p></td>
+<td><p>Factor to increase dt</p></td>
+</tr>
+<tr class="row-odd"><td><p>FALPHA</p></td>
+<td><p>0.1</p></td>
+<td><p>Parameter that controls velocity damping</p></td>
+</tr>
+<tr class="row-even"><td><p>FNMIN</p></td>
+<td><p>5</p></td>
+<td><p>Minimum number of iterations before adjusting alpha and dt</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="ml-pyamff-parameters-iopt-8-only-in-vtstcode6-3">
+<h2>ML-PYAMFF Parameters (IOPT = 8, only in vtstcode6.3)<a class="headerlink" href="#ml-pyamff-parameters-iopt-8-only-in-vtstcode6-3" title="Link to this heading">¶</a></h2>
+<p>The ML-<a class="reference external" href="https://gitlab.com/pyamff/pyamff">PyAMFF</a> optimizer trains a Behler-Parrinello neural network (see Physical Review Letters 2007, 98 (14) for detail) and uses it as the basis for a separate optimization process in order to reach a local minimum or a saddle point on the surrogate PES. While the model is being retrained with the updated training set for each cycle, the overall number of DFT force calls required for the optimization will eventually decrease while retaining the accuracy level below a pre-set threshold value.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PYAMFF_MODEL</p></td>
+<td><p>mlff.pyamff</p></td>
+<td><p>Input file name for neural network parameters</p></td>
+</tr>
+<tr class="row-odd"><td><p>PYAMFF_CONV</p></td>
+<td><p>GRADNORM</p></td>
+<td><p>Convergence criteria of neural network training (GRADNORM, RMSE)</p></td>
+</tr>
+<tr class="row-even"><td><p>PYAMFF_ETOL</p></td>
+<td><p>0.001</p></td>
+<td><p>Energy RMSE tolerance of neural network training</p></td>
+</tr>
+<tr class="row-odd"><td><p>PYAMFF_FTOL</p></td>
+<td><p>0.01</p></td>
+<td><p>Force RMSE tolerance of neural network training</p></td>
+</tr>
+<tr class="row-even"><td><p>PYAMFF_TOL</p></td>
+<td><p>0.001</p></td>
+<td><p>Grandnorm tolerance of neural network training</p></td>
+</tr>
+<tr class="row-odd"><td><p>PYAMFF_FCOEFF</p></td>
+<td><p>1.0</p></td>
+<td><p>Parameter that controls contribution of force loss to the training</p></td>
+</tr>
+<tr class="row-even"><td><p>PYAMFF_MAXEPOCH</p></td>
+<td><p>2000</p></td>
+<td><p>Maximum number of epochs of neural network training</p></td>
+</tr>
+<tr class="row-odd"><td><p>PYAMFF_OPT</p></td>
+<td><p>RPROP</p></td>
+<td><p>Type of optimizer for neural network training (RPROP, ADAM, LBFGS)</p></td>
+</tr>
+<tr class="row-even"><td><p>PYAMFF_SWFTOL</p></td>
+<td><p>0.05</p></td>
+<td><p>Criteria of switching optimizer type from ML-optimizer to LBFGS</p></td>
+</tr>
+<tr class="row-odd"><td><p>PYAMFF_MAXMOVE</p></td>
+<td><p>0.5</p></td>
+<td><p>Maximum allowed step size in total for translation by ML-optimizer</p></td>
+</tr>
+<tr class="row-even"><td><p>PYAMFF_MAXITER</p></td>
+<td><p>30</p></td>
+<td><p>Maximum number of relaxation steps on ML potential energy surface</p></td>
+</tr>
+</tbody>
+</table>
+<section id="ml-pyamff-optimizer-setup">
+<h3>ML-PyAMFF optimizer setup<a class="headerlink" href="#ml-pyamff-optimizer-setup" title="Link to this heading">¶</a></h3>
+<p>The latest version (revision 195) requires a formatted input model file (set by PYAMFF_MODEL) to use ML-PYAMFF optimizer. The formatted file needs following information:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Fingerprint types (Behler-Parrinello)</p></li>
+<li><p>Element types</p></li>
+<li><p>Minimum distance between elements</p></li>
+<li><p>Behler-Parrnello fingerprint parameters</p></li>
+<li><p>Neural network parameters</p></li>
+</ol>
+</div></blockquote>
+<p>An <a class="reference external" href="http://theory.cm.utexas.edu/vtsttools/optimizers.html#example">example</a> of the file can be found in the section below. If you are already a <a class="reference external" href="https://gitlab.com/pyamff/pyamff">PyAMFF</a> user, you can use your model output file (mlff.pyamff) as it is.</p>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>Input file for neural networks: <a class="reference external" href="_static/ml_pyamff/mlff.pyamff">mlff.pyamff</a></p></li>
+<li><p>Input files for optimizing a Cu13 cluster: <a class="reference external" href="_static/ml_pyamff/Cu13.tar.gz">Cu13.tar.gz</a></p></li>
+<li><p>Completed calculation: <a class="reference external" href="_static/ml_pyamff/Cu13_complete.tar.gz">Cu13_complete.tar.gz</a>.</p></li>
+<li><p>Input files for NEB calculation of a vacancy diffusion on Au(111): <a class="reference external" href="_static/ml_pyamff/VacDiff_Au111.tar.gz">VacDiff_Au111.tar.gz</a></p></li>
+<li><p>Completed calculation: <a class="reference external" href="_static/ml_pyamff/VacDiff_Au111_complete.tar.gz">VacDiff_Au111_complete.tar.gz</a>.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="ml-pyamff-optimizer-output">
+<h3>ML-PyAMFF optimizer output<a class="headerlink" href="#ml-pyamff-optimizer-output" title="Link to this heading">¶</a></h3>
+<p>The OUTCAR file has details of the calculation. This information is prefixed with the ML-PyAMFF tag. There are two main information:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Training information: The number of epochs to optimize models, their final loss, energy and force RMSE values</p></li>
+<li><p>Machine-learned potential: The predicted force by the machine-learned potential and the number of steps taken on the potential.</p></li>
+</ol>
+</div></blockquote>
+</section>
+<section id="note-from-developers">
+<h3>NOTE from developers<a class="headerlink" href="#note-from-developers" title="Link to this heading">¶</a></h3>
+<p>ML-PyAMFF optimizer has been recently added to vtstcode6.3. It is being actively developed currently so we are welcome anyone to try and report bugs! Please use our <a class="reference external" href="http://theory.cm.utexas.edu/forum">discussion forum</a> to ask questions or report bugs.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+
+          <h3><a href="index.html">VTST</a></h3>  
+      <ul class="this-page-menu">
+        <li><a href="download.html">Download</a></li>
+        <li><a href="installation.html">Installation</a></li>
+        <li><a href="neb.html">NEB</a></li>
+	<li><a href="dymmat.html">Dynamical Matrix</a></li>
+        <li><a href="dimer.html">Dimer</a></li>
+        <li><a href="lanczos.html">Lanczos</a></li>
+        <li><a href="#">Optimizers</a></li>
+        <li><a href="scripts.html">Scripts</a></li>
+        <li><a href="references.html">References</a></li>
+      </ul>
+
+
+      <h3>Development</h3>
+      <ul class="this-page-menu">
+            <li><a href="http://theory.cm.utexas.edu/redmine/projects/vtsttools/repository">Source Code Browser</a></li>
+            <li><a href="http://theory.cm.utexas.edu/redmine/projects/vtsttools/issues">Bug       Tracker</a></li>
+          </ul>
+            <h3>This page</h3>
+            <ul>
+<li><a class="reference internal" href="#">FORCE BASED OPTIMIZERS</a><ul>
+<li><a class="reference internal" href="#optimizer-input-parameters">Optimizer input parameters</a></li>
+<li><a class="reference internal" href="#required-parameters">Required Parameters</a></li>
+<li><a class="reference internal" href="#lbfgs-parameters-iopt-1">LBFGS Parameters (IOPT = 1)</a></li>
+<li><a class="reference internal" href="#cg-parameters-iopt-2">CG Parameters (IOPT = 2)</a></li>
+<li><a class="reference internal" href="#qm-parameters-iopt-3">QM Parameters (IOPT = 3)</a></li>
+<li><a class="reference internal" href="#sd-parameters-iopt-4">SD Parameters (IOPT = 4)</a></li>
+<li><a class="reference internal" href="#fire-parameters-iopt-7">FIRE Parameters (IOPT = 7)</a></li>
+<li><a class="reference internal" href="#ml-pyamff-parameters-iopt-8-only-in-vtstcode6-3">ML-PYAMFF Parameters (IOPT = 8, only in vtstcode6.3)</a><ul>
+<li><a class="reference internal" href="#ml-pyamff-optimizer-setup">ML-PyAMFF optimizer setup</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#ml-pyamff-optimizer-output">ML-PyAMFF optimizer output</a></li>
+<li><a class="reference internal" href="#note-from-developers">NOTE from developers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      <!-- Where does one find this "prev" variable?
+      
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="lanczos.html"
+            title="previous chapter">LANCZOS</a></p>
+        -->
+            <ul class="this-page-menu">
+              <li><a href="_sources/optimizers.txt">Page Source</a></li>  <!-- label changed from "Show source" to avoid confusion with the source code svn link -->
+            </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+<!-- 
+Remove footer.  Sphinx will actually parse anything with curly braces even if
+it is inside a comment.  The footer can be added by removing this comment
+and replacing [] by corresponding curly brackets
+[%- block relbar2 %][[ relbar() ]][% endblock %] 
+-->
+    <div class="footer">
+<!--
+      <div class="sidebarfooter">
+        <a href="http://validator.w3.org/check?uri=http://wiki.fysik.dtu.dk/gpaw/optimizers.html">
+          <img src="http://www.w3.org/Icons/valid-xhtml10"
+            alt="Valid XHTML 1.0 Transitional" height="31" width="88" />
+        </a>
+      </div>
+      &copy; Copyright 2015, Henkelman Group.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 9.0.4.-->
+    </div>
+  </body>
+</html>
