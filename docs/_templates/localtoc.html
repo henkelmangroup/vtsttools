@@ -1,0 +1,37 @@
+{#
+    Modified version of basic/localtoc.html
+#}
+
+<h3><a href="{{ pathto(root_doc)|e }}">{{ _('VTST') }}</a></h3>
+<ul class="this-page-menu">
+  <li><a href="{{ pathto('download') }}">{{ _('Download') }}</a></li>
+  <li><a href="{{ pathto('installation') }}">{{ _('Installation') }}</a></li>
+  <li><a href="{{ pathto('neb') }}">{{ _('NEB') }}</a></li>
+  <li><a href="{{ pathto('dymmat') }}">{{ _('Dynamical Matrix') }}</a></li>
+  <li><a href="{{ pathto('dimer') }}">{{ _('Dimer') }}</a></li>
+  <li><a href="{{ pathto('lanczos') }}">{{ _('Lanczos') }}</a></li>
+  <li><a href="{{ pathto('optimizers') }}">{{ _('Optimizers') }}</a></li>
+  <li><a href="{{ pathto('scripts') }}">{{ _('Scripts') }}</a></li>
+  <li><a href="{{ pathto('references') }}">{{ _('References') }}</a></li>
+</ul>
+<h3>Development</h3>
+<ul class="this-page-menu">
+  <li>VTST Code
+    <ul>
+      <li><a href="https://github.com/henkelmangroup/vtstcode">Source Code Browser</a></li>
+      <li><a href="https://github.com/henkelmangroup/vtstcode/issues">Bug Tracker</a></li>
+    </ul>
+  </li>
+  <li>VTST Scripts
+    <ul>
+      <li><a href="https://github.com/henkelmangroup/vtstscripts">Source Code Browser</a></li>
+      <li><a href="https://github.com/henkelmangroup/vtstscripts/issues">Bug Tracker</a></li>
+    </ul>
+  </li>
+</ul>
+{%- if display_toc and current_page_name not in ['index','contents'] %}
+  <div>
+      <h3>This page</h3>
+      {{ toc }}
+  </div>
+{%- endif %}
