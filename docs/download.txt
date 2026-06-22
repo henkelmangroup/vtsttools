@@ -11,33 +11,36 @@ VTST•Tools is released under the `Apache License version 2`_.
 Tar files
 =========
 
-    VTST Code: `vtstcode-$(LATEST_VTSTCODE_REV).tgz`_
+    VTST Code: `$(LATEST_VTSTCODE_REV)`_
 
     VTST Scripts: `vtstscripts.tgz`_
 
 -------------
 
-SVN Access
-==========
+Code Access
+===========
+**VTST Code**
 
-A read-only copy of the code can be anonymously checked out of the subversion
-repository with the following command:
-
-.. code-block:: sh
-
-    svn co https://theory.cm.utexas.edu/svn/vtsttools
-
-If you are a developer you can checkout the code using the command: 
+A copy of VTST Code can be obtained  using the command:
 
 .. code-block:: sh
 
-    svn co svn+ssh://username@theory.cm.utexas.edu/svn/vtsttools  # replace with your username
+    git clone https://github.com/henkelmangroup/vtstcode.git
 
-This will fetch a copy of the latest code to a local directory named vtsttools.
-For more information on subversion read its `online documentation`_.
+If an older version of VTST Code is needed, please visit the `Releases`_ page.
+
+**VTST Scripts**
+
+A copy of VTST Scripts can be obtained using the command:
+
+.. code-block:: sh
+
+    git clone https://github.com/henkelmangroup/vtstscripts.git
+
 
 
 .. _online documentation: http://svnbook.red-bean.com/en/1.5/index.html
 .. _Apache License version 2: http://www.apache.org/licenses/LICENSE-2.0
-.. _vtstcode-$(LATEST_VTSTCODE_REV).tgz: https://theory.cm.utexas.edu/code/vtstcode-$(LATEST_VTSTCODE_REV).tgz
+.. _$(LATEST_VTSTCODE_REV): $(LATEST_VTSTCODE_URL)
 .. _vtstscripts.tgz: https://theory.cm.utexas.edu/code/vtstscripts.tgz
+.. _Releases: https://github.com/henkelmangroup/vtstcode/releases
