@@ -5,9 +5,9 @@ on:
   # so it updates when the target repos update
   repository_dispatch:
     types: [code_updated]
-  # so we can manually update if a certain amount of time has passed
+  # so we can manually update every day at 07:00 UTC
   schedule: 
-    - cron: '<>' # release poll + watchdog = cadence TBD
+    - cron: '0 7 * * *'
   # so we can manually trigger
   workflow_dispatch:
 permissions: 
