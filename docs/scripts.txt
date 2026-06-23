@@ -6,7 +6,7 @@ SCRIPTS
 
 The following are a set of scripts to perform common tasks to help with VASP calculations, and particularly with transition state finding. The included Vasp.pm perl module contains several simple routines that are used by many of the scripts.
 
-**Download** the scripts: `vtstscripts.tgz`_
+**Download** the scripts: `vtstscripts.tar.gz`_
 
 **Install** by uncompressing this file, and adding the vtstscripts directory to your path.
 
@@ -454,5 +454,5 @@ Density of State Scripts
 +-----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------+
 
 
-.. _vtstscripts.tgz: http://theory.cm.utexas.edu/code/vtstscripts.tgz
+.. _vtstscripts.tar.gz: https://github.com/henkelmangroup/vtstscripts/archive/refs/heads/main.tar.gz
 .. _forum: http://theory.cm.utexas.edu/forum

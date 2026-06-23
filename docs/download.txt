@@ -13,7 +13,7 @@ Tar files
 
     VTST Code: `$(LATEST_VTSTCODE_REV)`_
 
-    VTST Scripts: `vtstscripts.tgz`_
+    VTST Scripts: `vtstscripts-main.tar.gz`_
 
 -------------
 
@@ -42,5 +42,5 @@ A copy of VTST Scripts can be obtained using the command:
 .. _online documentation: http://svnbook.red-bean.com/en/1.5/index.html
 .. _Apache License version 2: http://www.apache.org/licenses/LICENSE-2.0
 .. _$(LATEST_VTSTCODE_REV): $(LATEST_VTSTCODE_URL)
-.. _vtstscripts.tgz: https://theory.cm.utexas.edu/code/vtstscripts.tgz
+.. _vtstscripts-main.tar.gz: https://github.com/henkelmangroup/vtstscripts/archive/refs/heads/main.tar.gz
 .. _Releases: https://github.com/henkelmangroup/vtstcode/releases
